@@ -1,0 +1,66 @@
+{
+  "_comment": "Gemini 3.x models — active as of June 2026. All 2.x models are shut down. Do NOT add deprecated models.",
+  "_docs": "https://ai.google.dev/gemini-api/docs/models",
+
+  "models": {
+    "gemini-3.5-flash": {
+      "display_name": "Gemini 3.5 Flash",
+      "tier": "flash",
+      "status": "stable",
+      "context_window_tokens": 1048576,
+      "max_output_tokens": 8192,
+      "free_tier": {
+        "rpm": 10,
+        "rpd": 1500,
+        "tpm": 250000,
+        "reset_hour_utc": 7
+      },
+      "paid_tier": {
+        "rpm": 2000,
+        "tpm": 4000000
+      },
+      "notes": "Best balance of speed and quality for batch paraphrase tasks"
+    },
+    "gemini-3.1-flash-lite": {
+      "display_name": "Gemini 3.1 Flash Lite",
+      "tier": "flash-lite",
+      "status": "stable",
+      "context_window_tokens": 1048576,
+      "max_output_tokens": 8192,
+      "free_tier": {
+        "rpm": 30,
+        "rpd": 1500,
+        "tpm": 1000000,
+        "reset_hour_utc": 7
+      },
+      "paid_tier": {
+        "rpm": 4000,
+        "tpm": 8000000
+      },
+      "notes": "Highest free-tier RPM — best for high-volume paraphrase generation on a budget"
+    },
+    "gemini-3.1-pro-preview": {
+      "display_name": "Gemini 3.1 Pro (Preview)",
+      "tier": "pro",
+      "status": "preview",
+      "context_window_tokens": 2097152,
+      "max_output_tokens": 8192,
+      "free_tier": {
+        "rpm": 5,
+        "rpd": 25,
+        "tpm": 1000000,
+        "reset_hour_utc": 7
+      },
+      "paid_tier": {
+        "rpm": 1000,
+        "tpm": 4000000
+      },
+      "notes": "Highest quality but very low free-tier RPD — use for gold-dataset review, not bulk generation"
+    }
+  },
+
+  "recommended_for_paraphrase": "gemini-3.1-flash-lite",
+  "recommended_for_quality_check": "gemini-3.5-flash",
+
+  "_schema_version": "1.0"
+}

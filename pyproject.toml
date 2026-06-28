@@ -1,0 +1,13 @@
+[project]
+name = "intent-compiler"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "google-genai>=2.10.0",
+    "google-generativeai>=0.8.6",
+    "python-dotenv>=1.2.2",
+    "python-infrakit-dev>=0.1.6",
+    "tqdm>=4.68.3",
+]

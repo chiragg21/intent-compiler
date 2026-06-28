@@ -1,0 +1,31 @@
+# ============================================================
+# IntentCompiler — LLM Configuration
+# ============================================================
+# API keys are now securely loaded from your .env file.
+# Copy .env.example to .env and fill in your GEMINI_API_KEYS.
+#
+# Supported models (Gemini 3.x only — see utils/gemini_models.json
+# for full rate limit details):
+#
+#   gemini-3.1-flash-lite   ← recommended: highest free RPM (30)
+#   gemini-3.5-flash        ← balanced quality + speed
+#   gemini-3.1-pro-preview  ← best quality, very low free-tier quota
+# ============================================================
+
+llm:
+  provider: gemini                    # only "gemini" is supported
+
+  # Which model to use for paraphrase augmentation.
+  # Must match a key in utils/gemini_models.json.
+  model: gemini-3.1-flash-lite
+
+  # Where infrakit persists key state (quotas, RPM windows, etc.)
+  storage_dir: "./logs/llm_state"
+
+paraphrase:
+  # Number of paraphrase variants to generate per template example.
+  n_per_record: 4
+
+  # Number of sentences to group into a single LLM prompt (macro-batching).
+  # 20 is optimal. If the LLM misses records, decrease this number.
+  chunk_size: 15
