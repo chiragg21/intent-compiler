@@ -11,3 +11,9 @@ dependencies = [
     "python-infrakit-dev>=0.1.6",
     "tqdm>=4.68.3",
 ]
+
+[tool.pyright]
+pythonVersion = "3.13"
+venvPath = "."
+venv = ".venv"
+extraPaths = ["."]

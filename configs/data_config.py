@@ -90,6 +90,7 @@ FOLDERS_PERSONAL: list[str] = [
 
     # Projects & code
     "Projects", "Side_Projects", "Archive", "Backup",
+    "my_app", "test_dir", "src_code", "build_output", "temp_files",
 
     # Health
     "Medical", "Reports", "Prescriptions",
@@ -139,6 +140,12 @@ FUZZY_FOLDER_REFS: list[str] = [
     "family photos folder",  "wedding photos",
     "old backup folder",     "archived files",
     "medical records folder","health documents",
+]
+
+# Specific file names for RENAME_FILE and OPEN_FILE
+FILE_NAMES: list[str] = [
+    "resume.pdf", "config.json", "settings.yaml", "presentation.pptx", 
+    "report_q1.docx", "budget.xlsx", "vacation_pic.jpg", "notes.txt"
 ]
 
 # Union — used in generic templates that don't distinguish file vs folder

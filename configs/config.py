@@ -14,8 +14,8 @@ Exports:
 import os
 from pathlib import Path
 
+import yaml
 from dotenv import load_dotenv
-from infrakit import load as infrakit_load
 
 _ROOT = Path(__file__).resolve().parent.parent
 _ENV_FILE = _ROOT / ".env"
@@ -24,10 +24,11 @@ _LLM_CONFIG_FILE = _ROOT / "configs" / "llm_config.yaml"
 # 1. Load environment variables from .env
 load_dotenv(_ENV_FILE)
 
-# 2. Load YAML configs via infrakit
+# 2. Load YAML configs via yaml
 def _load_app_config() -> dict:
     if _LLM_CONFIG_FILE.exists():
-        return infrakit_load(str(_LLM_CONFIG_FILE))
+        with open(_LLM_CONFIG_FILE, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f) or {}
     return {}
 
 # Export the config globally (loaded exactly once when imported)

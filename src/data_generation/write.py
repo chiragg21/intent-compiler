@@ -41,7 +41,7 @@ def write_jsonl(path: Path, records: list[dict]) -> None:
     with open(path, "w", encoding="utf-8") as f:
         for record in records:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
-    print(f"  [wrote] {len(records):>5} records  →  {path}")
+    print(f"  [wrote] {len(records):>5} records  ->  {path}")
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -157,16 +157,16 @@ def write_stats(named_paths: dict[str, Path], stats_path: Path) -> dict:
     stats = compute_stats(named_paths)
     stats_path.parent.mkdir(parents=True, exist_ok=True)
     stats_path.write_text(json.dumps(stats, indent=2, ensure_ascii=False))
-    print(f"\n  [stats] Written → {stats_path}")
+    print(f"\n  [stats] Written -> {stats_path}")
     return stats
 
 
 def print_summary(stats: dict) -> None:
     """Print a compact summary table to stdout."""
-    print("\n── Dataset Summary " + "─" * 45)
+    print("\n-- Dataset Summary " + "-" * 45)
     header = f"  {'split':<10} {'records':>7}  {'fuzzy':>5}  {'checksum':>10}"
     print(header)
-    print("  " + "─" * (len(header) - 2))
+    print("  " + "-" * (len(header) - 2))
     for name, s in stats.items():
         chk = s.get("checksum_md5", "")[:8]
         print(

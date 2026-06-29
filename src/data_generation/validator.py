@@ -29,6 +29,7 @@ KNOWN_OPERATIONS: set[str] = {
     "PY_VENV", "PY_INSTALL", "PY_TEST", "PY_NOTEBOOK",
     "SYS_OPEN", "SYS_KILL", "SYS_STORAGE", "SYS_MEMORY",
     "DEV_ORGANIZE", "DEV_CLEAN", "DEV_ARCHIVE_LOGS",
+    "MKDIR", "LIST", "RENAME_FILE", "OPEN_FILE",
 }
 
 # Required fields in every dataset record

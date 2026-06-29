@@ -17,7 +17,7 @@ Public API
 
 from collections import defaultdict
 
-from src.data_generation.dsl_builder import dsl, fuzzy, rename_dsl, has_fuzzy, extract_intent
+from src.data_generation.dsl_builder import dsl, fuzzy, rename_dsl, rename_file_dsl, has_fuzzy, extract_intent
 
 
 # ---------------------------------------------------------------------------
@@ -279,6 +279,70 @@ _RAW: list[dict] = [
 
     {"intent": "DEV_ARCHIVE_LOGS", "input": "move old log files to archive folder",
      "output": dsl("DEV_ARCHIVE_LOGS", path="./logs", older_than_days=7, dst="./archive", ext="log")},
+
+    # ── MKDIR ─────────────────────────────────────────────────────────────
+    {"intent": "MKDIR", "input": "create a folder called Resume",
+     "output": dsl("MKDIR", path=".", name="Resume", exist_ok=True)},
+
+    {"intent": "MKDIR", "input": "make a new folder named Projects on the desktop",
+     "output": dsl("MKDIR", path="Desktop", name="Projects", exist_ok=True)},
+
+    {"intent": "MKDIR", "input": "create a Work directory in documents",
+     "output": dsl("MKDIR", path="Documents", name="Work", exist_ok=True)},
+
+    {"intent": "MKDIR", "input": "make a folder for my trip photos",
+     "output": dsl("MKDIR", path=".", name="trip photos", exist_ok=True)},
+
+    {"intent": "MKDIR", "input": "add a new directory called archive here",
+     "output": dsl("MKDIR", path=".", name="archive", exist_ok=True)},
+
+    # ── LIST ──────────────────────────────────────────────────────────────
+    {"intent": "LIST", "input": "show me what's in Downloads",
+     "output": dsl("LIST", path="Downloads", type="all", pattern="*")},
+
+    {"intent": "LIST", "input": "list all files in the current folder",
+     "output": dsl("LIST", path=".", type="file", pattern="*")},
+
+    {"intent": "LIST", "input": "show folders in my documents",
+     "output": dsl("LIST", path="Documents", type="dir", pattern="*")},
+
+    {"intent": "LIST", "input": "list all pdfs here",
+     "output": dsl("LIST", path=".", type="file", pattern="*.pdf")},
+
+    {"intent": "LIST", "input": "what is inside the project directory",
+     "output": dsl("LIST", path="./project", type="all", pattern="*")},
+
+    # ── RENAME_FILE ───────────────────────────────────────────────────────
+    {"intent": "RENAME_FILE", "input": "rename my resume to chirag_cv_2024.pdf",
+     "output": rename_file_dsl(fuzzy("resume"), "chirag_cv_2024.pdf")},
+
+    {"intent": "RENAME_FILE", "input": "change the name of config.json to config.old.json",
+     "output": rename_file_dsl("config.json", "config.old.json")},
+
+    {"intent": "RENAME_FILE", "input": "rename the presentation to final_deck.pptx",
+     "output": rename_file_dsl(fuzzy("presentation"), "final_deck.pptx")},
+
+    {"intent": "RENAME_FILE", "input": "rename report.docx to report_v2.docx",
+     "output": rename_file_dsl("report.docx", "report_v2.docx")},
+
+    {"intent": "RENAME_FILE", "input": "rename this script to run.py",
+     "output": rename_file_dsl(fuzzy("script"), "run.py")},
+
+    # ── OPEN_FILE ─────────────────────────────────────────────────────────
+    {"intent": "OPEN_FILE", "input": "open my resume",
+     "output": dsl("OPEN_FILE", src=fuzzy("resume"), app=None)},
+
+    {"intent": "OPEN_FILE", "input": "open this config file in vscode",
+     "output": dsl("OPEN_FILE", src=fuzzy("config file"), app="Visual Studio Code")},
+
+    {"intent": "OPEN_FILE", "input": "open the budget spreadsheet",
+     "output": dsl("OPEN_FILE", src=fuzzy("budget spreadsheet"), app=None)},
+
+    {"intent": "OPEN_FILE", "input": "open notes.txt",
+     "output": dsl("OPEN_FILE", src="notes.txt", app=None)},
+
+    {"intent": "OPEN_FILE", "input": "launch the presentation",
+     "output": dsl("OPEN_FILE", src=fuzzy("presentation"), app=None)},
 ]
 
 

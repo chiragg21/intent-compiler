@@ -23,7 +23,7 @@ import random
 from collections import defaultdict
 
 import configs.data_config as C
-from src.data_generation.dsl_builder import dsl, fuzzy, rename_dsl, has_fuzzy, extract_intent
+from src.data_generation.dsl_builder import dsl, fuzzy, rename_dsl, rename_file_dsl, has_fuzzy, extract_intent
 
 random.seed(C.RANDOM_SEED)
 
@@ -394,6 +394,82 @@ TEMPLATES: list[tuple] = [
          "days": _r(C.LOG_DAYS),
          "dst":  _r(["./archive", "~/archive", "./old_logs"]),
      }),
+
+    # ── MKDIR ─────────────────────────────────────────────────────────────
+    ("create a folder called {name}",
+     lambda v: dsl("MKDIR", path=".", name=v["name"], exist_ok=True),
+     lambda: {"name": _r(C.FOLDERS_PERSONAL)}),
+
+    ("make a new folder named {name} in {path}",
+     lambda v: dsl("MKDIR", path=v["path"], name=v["name"], exist_ok=True),
+     lambda: {"path": _r(C.FOLDERS_DST), "name": _r(C.FOLDERS_PERSONAL)}),
+
+    ("create a {name} directory here",
+     lambda v: dsl("MKDIR", path=".", name=v["name"], exist_ok=True),
+     lambda: {"name": _r(C.FOLDERS_PERSONAL)}),
+
+    ("make a folder for my {ref}",
+     lambda v: dsl("MKDIR", path=".", name=v["ref"], exist_ok=True),
+     lambda: {"ref": _r(C.FUZZY_FOLDER_REFS)}),
+
+    # ── LIST ──────────────────────────────────────────────────────────────
+    ("show me what's in {path}",
+     lambda v: dsl("LIST", path=v["path"], type="all", pattern="*"),
+     lambda: {"path": _r(C.FOLDERS_SRC)}),
+
+    ("list all files in {path}",
+     lambda v: dsl("LIST", path=v["path"], type="file", pattern="*"),
+     lambda: {"path": _r(C.FOLDERS_PERSONAL)}),
+
+    ("show folders in {path}",
+     lambda v: dsl("LIST", path=v["path"], type="dir", pattern="*"),
+     lambda: {"path": _r(C.FOLDERS_SRC)}),
+
+    ("what is inside {path}",
+     lambda v: dsl("LIST", path=v["path"], type="all", pattern="*"),
+     lambda: {"path": _r(["Downloads", "Desktop", "Documents", ".", "./src"])}),
+
+    ("list all {ext} files here",
+     lambda v: dsl("LIST", path=".", type="file", pattern=f"*.{v['ext']}"),
+     lambda: {"ext": _r(C.EXTENSIONS)}),
+
+    # ── RENAME_FILE ───────────────────────────────────────────────────────
+    ("rename my {ref} to {name}",
+     lambda v: rename_file_dsl(fuzzy(v["ref"]), v["name"]),
+     lambda: {"ref": _r(C.FUZZY_FILE_REFS), "name": _r(C.FILE_NAMES)}),
+
+    ("change the name of {src} to {name}",
+     lambda v: rename_file_dsl(v["src"], v["name"]),
+     lambda: {"src": _r(C.FILE_NAMES), "name": _r(C.FILE_NAMES)}),
+
+    ("rename {src} to {name}",
+     lambda v: rename_file_dsl(v["src"], v["name"]),
+     lambda: {"src": _r(C.FILE_NAMES), "name": _r(C.FILE_NAMES)}),
+
+    ("rename the {ref} to {name}",
+     lambda v: rename_file_dsl(fuzzy(v["ref"]), v["name"]),
+     lambda: {"ref": _r(C.FUZZY_FILE_REFS), "name": _r(C.FILE_NAMES)}),
+
+    # ── OPEN_FILE ─────────────────────────────────────────────────────────
+    ("open my {ref}",
+     lambda v: dsl("OPEN_FILE", src=fuzzy(v["ref"]), app=None),
+     lambda: {"ref": _r(C.FUZZY_FILE_REFS)}),
+
+    ("open {src}",
+     lambda v: dsl("OPEN_FILE", src=v["src"], app=None),
+     lambda: {"src": _r(C.FILE_NAMES)}),
+
+    ("open this {ref} in {app}",
+     lambda v: dsl("OPEN_FILE", src=fuzzy(v["ref"]), app=v["app"]),
+     lambda: {"ref": _r(C.FUZZY_FILE_REFS), "app": _r(C.APPS)}),
+
+    ("launch the {ref}",
+     lambda v: dsl("OPEN_FILE", src=fuzzy(v["ref"]), app=None),
+     lambda: {"ref": _r(C.FUZZY_FILE_REFS)}),
+
+    ("open {src} in {app}",
+     lambda v: dsl("OPEN_FILE", src=v["src"], app=v["app"]),
+     lambda: {"src": _r(C.FILE_NAMES), "app": _r(C.APPS)}),
 ]
 
 

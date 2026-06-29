@@ -124,9 +124,10 @@ def paraphrase_dataset(
         source_chunk = chunk_map[chunk_idx]
         source_dict = {r["id"]: r for r in source_chunk}
         
-        if result.error or not result.schema_matched or not result.parsed:
+        if result is None or result.error or not result.schema_matched or not result.parsed:
             failed_prompts += 1
-            print(f"  [llm-error] macro-prompt error: {result.error}", file=sys.stderr)
+            err_msg = result.error if result is not None else "no response (None)"
+            print(f"  [llm-error] macro-prompt error: {err_msg}", file=sys.stderr)
             continue
         
         for item in result.parsed.items:

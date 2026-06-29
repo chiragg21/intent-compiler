@@ -24,7 +24,7 @@ llm:
 
 paraphrase:
   # Number of paraphrase variants to generate per template example.
-  n_per_record: 4
+  n_per_record: 5
 
   # Number of sentences to group into a single LLM prompt (macro-batching).
   # 20 is optimal. If the LLM misses records, decrease this number.

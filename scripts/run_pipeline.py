@@ -168,7 +168,7 @@ def main() -> int:
     if "paraphrase" in steps:
         if not run_paraphrase(args.limit, args.skip_fuzzy, args.batch_save_every): return 1
         
-    print("\n  ✓ Pipeline complete.\n")
+    print("\n  [OK] Pipeline complete.\n")
     return 0
 
 

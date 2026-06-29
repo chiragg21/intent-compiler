@@ -27,7 +27,6 @@ _PROJECT_ROOT     = _UTILS_DIR.parent
 _DEFAULT_CONFIG   = _PROJECT_ROOT / "configs" / "llm_config.yaml"
 _GEMINI_MODELS    = _UTILS_DIR / "gemini_models.json"
 
-# print(get_gemini_api_keys())
 
 def _load_gemini_registry() -> dict:
     if not _GEMINI_MODELS.exists():

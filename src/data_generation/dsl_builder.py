@@ -66,6 +66,26 @@ def fuzzy(query: str) -> str:
     return f'FUZZY("{query}")'
 
 
+def rename_file_dsl(src: str, name: str) -> str:
+    """
+    Build a RENAME_FILE DSL block.
+    
+    Example:
+        rename_file_dsl(fuzzy("resume"), "chirag_resume_2024.pdf")
+    """
+    params = [
+        ("src", _format_value(src)),
+        ("name", _format_value(name)),
+    ]
+    lines = ["RENAME_FILE("]
+    for i, (k, v) in enumerate(params):
+        comma = "," if i < len(params) - 1 else ""
+        lines.append(f"    {k}={v}{comma}")
+    lines.append(")")
+    return "\n".join(lines)
+
+
+
 def rename_dsl(path: str, from_str: str, to_str: str, ext: str = "*") -> str:
     """
     Build a RENAME DSL block.

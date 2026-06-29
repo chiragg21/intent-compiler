@@ -11,5 +11,5 @@ wheels/
 .env
 data/
 brain/
-intent_compiler_project_plan.md
+docs/
 logs
